@@ -1,0 +1,74 @@
+{% extends "_base.html" %}
+
+{% block title %}Discover Reader Types{% endblock %}
+
+{% block content %}
+<style>
+    .discover-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+    .discover-header h1 {
+        font-size: 2.8rem;
+        background: -webkit-linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    .discover-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 2.5rem;
+    }
+    .type-card {
+        background: var(--card-bg-color);
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        text-align: center;
+        padding: 2rem;
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .type-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    }
+    .type-card img {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%; /* Resimleri yuvarlak yapar */
+        object-fit: cover;
+        margin-bottom: 1.5rem;
+        border: 4px solid var(--background-color);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .type-card h2 {
+        margin: 0 0 1rem 0;
+        font-size: 1.5rem;
+        color: var(--primary-color);
+    }
+    .type-card p {
+        font-size: 0.95rem;
+        color: #555;
+    }
+</style>
+
+<div class="discover-header">
+    <h1>Meet the Reader Types</h1>
+    <p style="font-size: 1.2rem; color: #555;">Every reader has a unique personality. Find out which ones resonate with you!</p>
+</div>
+
+<div class="discover-grid">
+{% for type in reader_types %}
+    <div class="type-card">
+        <img src="{{ url_for('static', filename='images/reader_types/' + type.image_file) }}" 
+             alt="Illustration for {{ type.name }}">
+        <h2>{{ type.name }}</h2>
+        <p>{{ type.description }}</p>
+    </div>
+{% endfor %}
+</div>
+
+<div style="text-align: center; margin-top: 4rem;">
+    <a href="{{ url_for('main.quiz') }}" class="btn">Find My Type!</a>
+</div>
+{% endblock %}

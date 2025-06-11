@@ -1,0 +1,53 @@
+{% extends "_base.html" %}
+
+{% block title %}Book Personality Quiz{% endblock %}
+
+{% block content %}
+<style>
+    .question-card {
+        margin-bottom: 2rem;
+    }
+    .question-label {
+        font-weight: 600;
+        font-size: 1.1rem;
+    }
+    .option-label {
+        display: block;
+        background: #f9f9f9;
+        padding: 1rem;
+        border-radius: 8px;
+        margin-top: 0.5rem;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+    .option-label:hover {
+        background: #eef;
+    }
+    .option-label input {
+        margin-right: 10px;
+    }
+</style>
+
+<h1 style="text-align: center;">Book Personality Quiz</h1>
+<p style="text-align: center; margin-bottom: 2rem;">Answer the questions to find your reader type!</p>
+
+<form action="{{ url_for('main.result') }}" method="POST">
+    {% for question in questions %}
+        <div class="card question-card">
+            <p class="question-label">{{ loop.index }}. {{ question.question }}</p>
+            {% for option in question.options %}
+                <label class="option-label">
+                    <input
+                        type="{{ 'checkbox' if question.get('multiple') else 'radio' }}"
+                        name="question_{{ question.id }}"
+                        value="{{ loop.index0 }}">
+                    {{ option.label }}
+                </label>
+            {% endfor %}
+        </div>
+    {% endfor %}
+    <div style="text-align: center;">
+        <button type="submit" class="btn">See My Result</button>
+    </div>
+</form>
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends "_base.html" %}
+
+{% block title %}Your Reader Type{% endblock %}
+
+{% block content %}
+<style>
+    .result-container {
+        text-align: center;
+    }
+    .result-image {
+        width: 150px; /* Resim genişliği */
+        height: 150px; /* Resim yüksekliği */
+        border-radius: 50%; /* Resmi yuvarlak yapar */
+        object-fit: cover;
+        margin-bottom: 1.5rem;
+        border: 4px solid #fff;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    }
+    .result-type {
+        font-size: 2.5rem;
+        font-weight: 700;
+        background: -webkit-linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    .result-description {
+        font-style: italic;
+        color: #555;
+        max-width: 600px;
+        margin: 1rem auto 2rem auto;
+    }
+    .scores-list {
+        list-style: none;
+        padding: 0;
+        max-width: 400px;
+        margin: 1rem auto;
+        text-align: left;
+    }
+    .scores-list li {
+        background: #f9f9f9;
+        padding: 0.8rem 1.2rem;
+        border-radius: 8px;
+        margin-bottom: 0.5rem;
+    }
+</style>
+
+<div class="card result-container">
+    {% if top_types %}
+        <h2>Congratulations! Your dominant reader type is:</h2>
+
+        {# YENİ: Resim buraya eklendi #}
+        {% if top_type_image %}
+            <img src="{{ url_for('static', filename='images/reader_types/' + top_type_image) }}"
+                 alt="Illustration for {{ top_types[0][0] }}"
+                 class="result-image">
+        {% endif %}
+
+        <h1 class="result-type">{{ top_types[0][0] | replace('_', ' ') | title }}</h1>
+        <p class="result-description">"{{ top_type_description }}"</p>
+        <a href="{{ url_for('main.recommendations', type=top_types[0][0]) }}" class="btn">Show Me My Books!</a>
+    {% else %}
+        <h2>No clear result found.</h2>
+        <p>Please try the quiz again!</p>
+        <a href="{{ url_for('main.quiz') }}" class="btn">Try Again</a>
+    {% endif %}
+
+    {% if top_types|length > 1 %}
+    <hr style="margin: 2rem 0;">
+    <h3>Your Other Top Types:</h3>
+    <ul class="scores-list">
+        {% for reader_type, score in top_types[1:] %}
+            {# GÜNCELLENDİ: Daha güzel görünmesi için formatlandı #}
+            <li><strong>{{ reader_type | replace('_', ' ') | title }}</strong> - Score: {{ score }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</div>
+{% endblock %}

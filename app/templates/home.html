@@ -1,0 +1,33 @@
+{% extends "_base.html" %}
+
+{% block title %}Welcome to ReadQuest{% endblock %}
+
+{% block content %}
+<style>
+    .hero {
+        text-align: center;
+        padding: 4rem 1rem;
+    }
+    .hero h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        background: -webkit-linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+        font-size: 1.2rem;
+        color: #555;
+        margin-bottom: 2rem;
+    }
+</style>
+<div class="hero">
+    <h1>Discover Your Reader Personality</h1>
+    <p>Find out what kind of reader you are and get book recommendations tailored just for you.</p>
+    {% if current_user.is_anonymous %}
+        <a href="{{ url_for('main.login') }}" class="btn">Login to Start</a>
+    {% else %}
+        <a href="{{ url_for('main.quiz') }}" class="btn">Start the Quiz</a>
+    {% endif %}
+</div>
+{% endblock %}

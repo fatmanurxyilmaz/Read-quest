@@ -1,0 +1,25 @@
+{% extends "_base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div style="max-width: 450px; margin: auto;">
+    <div class="card">
+        <h1 style="text-align: center;">Login</h1>
+        <form action="" method="post" novalidate>
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <p><button type="submit" class="btn" style="width: 100%;">Sign In</button></p>
+        </form>
+        <p style="text-align: center; margin-top: 1rem;">
+            New User? <a href="{{ url_for('main.register') }}">Click to Register!</a>
+        </p>
+    </div>
+</div>
+{% endblock %}
